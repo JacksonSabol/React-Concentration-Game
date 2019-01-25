@@ -17,8 +17,8 @@ class App extends Component {
 
   // Life-cycle method that's the React.js equivalent of $(document).ready() - do work once the components mount
   componentDidMount() {
-    // Change the this.state.cards here to rearrange the cards on the page - "Shuffle the Deck" of ReactCards
-    // Randomize this.setState({ cards }); - this.shuffleDeck();
+    // Set this.state.cards to rearrange the cards on the page - "Shuffle the Deck" of ReactCards
+    this.setState({ cards: this.shuffleDeck(this.state.cards) });
   }
 
   // Function to handle the click of a card
@@ -45,27 +45,43 @@ class App extends Component {
     });
     // Use choseCorrectly to handle this.state.score and this.state.topScore - i.e. invoke the corresponding built-in functions depending on whether player chose correctly
     // condition ?           true                               false         
-    choseCorrectly ? this.correctGuess(updatedDeck) : this.wrongGuess(updatedDeck);
+    choseCorrectly ? this.handleCorrectChoice(updatedDeck) : this.handleIncorrectChoice(updatedDeck);
   };
 
   // Function to handle this.state.score and this.state.topScore when a player chooses a previously unclicked card
   handleCorrectChoice = updatedCards => {
     // Instantiate a variable to point to this.state.score so it can be incremented
-    // Compare the new score to this.state.topScore to update the top score
-    // Instantiate a variable to point to an updated this.state.topScore
-    // Set this.state.score to the new score
-    // Set this.state.topScore to the new top score
-    // "Shuffle the Deck" of ReactCards - this.shuffleDeck();
-    // Set this.state.message to "You Guessed Correctly!"
+    let newScore = this.state.score;
+    newScore++
+    // Instantiate a variable to compare the new score to this.state.topScore to update the top score
+    // Use Math.max to compare without overwriting the value of this.state.topScore, since that needs to be conserved when a player loses
+    // https://www.w3schools.com/jsref/jsref_max.asp
+    let newTopScore = Math.max(newScore, this.state.topScore);
+    // Update the states and shuffle the deck of cards
+    this.setState({
+      // Set this.state.cards to the shuffled cards with the updated value of 'clicked'
+      cards: this.shuffleDeck(updatedCards),
+      // Set this.state.score to the new score
+      score: newScore,
+      // Set this.state.topScore to the new top score
+      topScore: newTopScore,
+      // Set this.state.message to "You Guessed Correctly!"
+      message: "You Guessed Correctly!"
+    })
     // State change will re-render the components
   }
 
   // Function to handle this.state.score when a player incorrectly chooses a previously clicked card
   handleIncorrectChoice = updatedCards => {
     // Since player chose incorrectly, the game will need to be reset - i.e. all values of 'clicked' in this.state.cards need to be set to false
-    // Set this.state.score to 0 to 'restart' the game without losing track of the topScore
-    // Set this.state.message to "You Guessed Incorrectly!"
-    // Invoke a function to change all values of 'clicked' to false - this.resetGame();
+    this.setState({
+      // Set this.state.cards to the return array of this.resetGame() to change all values of 'clicked' to false 
+      cards: this.resetGame(updatedCards),
+      // Set this.state.score to 0 to 'restart' the game without losing track of the topScore
+      score: 0,
+      // Set this.state.message to "You Guessed Incorrectly!"
+      message: "You Guessed Incorrectly!"
+    })
   }
 
   // Function to handle "Shuffling the Deck" to rearrange the cards on the DOM
@@ -79,9 +95,12 @@ class App extends Component {
 
   // Function to handle resetting the game after a player makes an incorrect choice or wins the game
   resetGame = deck => {
-    // Instantiate a variable to receive the updated deck where all values of 'clicked' are set to false
-    // Iterate through all of the card objects in this.state.cards and set 'clicked' to false .map()
-    // Shuffle the reset deck and return it to start the game over - this.shuffleDeck();
+    // Iterate through all of the card objects passed by handleIncorrectChoice using the .map() method - set all values of 'clicked' to false
+    // Assign a variable to hold the results, because .map() creates a new array with the results and does not change the original array
+    // Use JSX Spread attribute to only update the key of 'clicked' to false https://zhenyong.github.io/react/docs/jsx-spread.html
+    const resetDeck = deck.map(card => ({ ...card, clicked: false }));
+    // Shuffle the reset deck and return it to handleIncorrectChoice function which changes state to start the game over
+    return this.shuffleDeck(resetDeck);
   };
 
   // Render the components
