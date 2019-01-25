@@ -23,14 +23,29 @@ class App extends Component {
 
   // Function to handle the click of a card
   handleCardClick = id => {
-    // When a card is clicked, check to see if it has been clicked before - check this.state.cards[i].clicked ? true : false
     // Instantiate a variable to hold a default value of 'chosen' equal to false
-    // Iterate through the current cards (this.state.cards) .map() method
-    // Compare the id of the card clicked to the id's of all of the cards in this.state.cards
-    // If the value of 'chosen' is 'false' on the object matching the id of the card clicked, set it to 'true'
-    // Reassign the variable tracking 'chosen' to 'true', meaning the player correctly chose an unclicked card
-    // Otherwise, the default 'chosen' value of false is conserved, and the player did not choose correctly
-    // Use this variable to handle this.state.score and this.state.topScore, depending on whether player chose correctly
+    let choseCorrectly = false;
+    // When a card is clicked, check to see if it has been clicked before - check this.state.cards[i].clicked ? true : false
+    // Iterate through the current cards (this.state.cards) using the .map() method
+    // Assign a variable to hold the results, because .map() creates a new array with the results and does not change the original array
+    const updatedDeck = this.state.cards.map(card => {
+      // Use a conditional to compare the id of the card clicked to the id's of all of the cards in this.state.cards
+      if (card.id === id) {
+        // If the value of 'clicked' is 'false' on the object matching the id of the card clicked...
+        if (!card.clicked) {
+          // ...set it to 'true'
+          card.clicked = true;
+          // Reassign the tracking variable choseCorrectly to 'true', meaning the player correctly chose an unclicked card
+          choseCorrectly = true;
+        }
+        // If this condition is not met, the default choseCorrectly value of 'false' is conserved, so the player did not choose correctly
+      }
+      // Return the card parameter for each of this.state.cards to the updatedDeck array
+      return card;
+    });
+    // Use choseCorrectly to handle this.state.score and this.state.topScore - i.e. invoke the corresponding built-in functions depending on whether player chose correctly
+    // condition ?           true                               false         
+    choseCorrectly ? this.correctGuess(updatedDeck) : this.wrongGuess(updatedDeck);
   };
 
   // Function to handle this.state.score and this.state.topScore when a player chooses a previously unclicked card
@@ -55,10 +70,11 @@ class App extends Component {
 
   // Function to handle "Shuffling the Deck" to rearrange the cards on the DOM
   shuffleDeck = deck => {
-    // Assigning a variable to receive the "shuffled" deck of cards
-    // Randomly sort the deck using a compareFunction to handle sorting numbers
+    // Assign a variable to receive the "shuffled" deck of cards
     // array.sort(compareFunction) https://www.w3schools.com/jsref/jsref_sort.asp
-    // Set this.state.cards to the new deck
+    // https://stackoverflow.com/a/43235780/10503606
+    let newDeck = deck.sort(() => Math.random() - 0.5); // * Note to self: test const versus let on newDeck
+    return newDeck; // There's no need to set this.state.cards to the newDeck because we can call this function in every other function that does setState, thereby re-rendering the components
   };
 
   // Function to handle resetting the game after a player makes an incorrect choice or wins the game
