@@ -1,62 +1,62 @@
 [
   {
     "id": 1,
-    "image": "../public/assets/images/card1.png",
+    "image": "assets/images/card1.png",
     "clicked": false
   },
   {
     "id": 2,
-    "image": "../public/assets/images/card2.png",
+    "image": "assets/images/card2.png",
     "clicked": false
   },
   {
     "id": 3,
-    "image": "../public/assets/images/card3.png",
+    "image": "assets/images/card3.png",
     "clicked": false
   },
   {
     "id": 4,
-    "image": "../public/assets/images/card4.png",
+    "image": "assets/images/card4.png",
     "clicked": false
   },
   {
     "id": 5,
-    "image": "../public/assets/images/card5.png",
+    "image": "assets/images/card5.png",
     "clicked": false
   },
   {
     "id": 6,
-    "image": "../public/assets/images/card6.png",
+    "image": "assets/images/card6.png",
     "clicked": false
   },
   {
     "id": 7,
-    "image": "../public/assets/images/card7.png",
+    "image": "assets/images/card7.png",
     "clicked": false
   },
   {
     "id": 8,
-    "image": "../public/assets/images/card8.png",
+    "image": "assets/images/card8.png",
     "clicked": false
   },
   {
     "id": 9,
-    "image": "../public/assets/images/card9.png",
+    "image": "assets/images/card9.png",
     "clicked": false
   },
   {
     "id": 10,
-    "image": "../public/assets/images/card10.png",
+    "image": "assets/images/card10.png",
     "clicked": false
   },
   {
     "id": 11,
-    "image": "../public/assets/images/card11.png",
+    "image": "assets/images/card11.png",
     "clicked": false
   },
   {
     "id": 12,
-    "image": "../public/assets/images/card12.png",
+    "image": "assets/images/card12.png",
     "clicked": false
   }
 ]
