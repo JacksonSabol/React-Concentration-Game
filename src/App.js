@@ -107,9 +107,12 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header /> {/* Renders a header with the title of the game */}
-        {/* Send this.state.message to a component here */}
-        {/* Send this.state.score and this.state.topScore to a component here */}
+        <Header 
+          title="Concentration Game" // Send the title to the props of Header
+          message={this.state.message} // Send this.state.message to the props of Header to display Correct! or Incorrect! messages
+          score={this.state.score} // Send this.state.score to the props of Header for display
+          topScore={this.state.topScore} // Send this.state.topScore to the props of Header for display
+        />
         <Wrapper>
           {
             this.state.cards.map(card => ( // map() this.state.cards to pass each object in the array to the ReactCard component
