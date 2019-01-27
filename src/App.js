@@ -55,20 +55,36 @@ class App extends Component {
     let newScore = this.state.score;
     newScore++
     // Instantiate a variable to compare the new score to this.state.topScore to update the top score
-    // Use Math.max to compare without overwriting the value of this.state.topScore, since that needs to be conserved when a player loses
+    // Use Math.max to compare without overwriting the value of this.state.topScore, since that needs to be conserved when a player wins/loses
     // https://www.w3schools.com/jsref/jsref_max.asp
     let newTopScore = Math.max(newScore, this.state.topScore);
-    // Update the states and shuffle the deck of cards
-    this.setState({
-      // Set this.state.cards to the shuffled cards with the updated value of 'clicked'
-      cards: this.shuffleDeck(updatedCards),
-      // Set this.state.score to the new score
-      score: newScore,
-      // Set this.state.topScore to the new top score
-      topScore: newTopScore,
-      // Set this.state.message to "You Guessed Correctly!"
-      message: "You Guessed Correctly!"
-    })
+    // Check to see if the newTopScore is equal to the maximum score possible (12) - win condition
+    if (newTopScore === 12) {
+      this.setState({
+        // Set this.state.score to 0 to 'restart' the game without losing track of the topScore
+        score: 0,
+        // Set this.state.topScore to the maximum possible score
+        topScore: newTopScore,
+        // Set this.state.message to a 'win' message
+        message: "You Win! Congratulations!",
+        // Set this.state.cards to the return array of this.resetGame() to change all values of 'clicked' to false
+        cards: this.resetGame(updatedCards)
+      })
+    }
+    // Otherwise, continue with the game
+    else {
+      // Update the states and shuffle the deck of cards
+      this.setState({
+        // Set this.state.cards to the shuffled cards with the updated value of 'clicked'
+        cards: this.shuffleDeck(updatedCards),
+        // Set this.state.score to the new score
+        score: newScore,
+        // Set this.state.topScore to the new top score
+        topScore: newTopScore,
+        // Set this.state.message to "You Guessed Correctly!"
+        message: "You Guessed Correctly!"
+      })
+    }
     // State change will re-render the components
   }
 
@@ -76,7 +92,7 @@ class App extends Component {
   handleIncorrectChoice = updatedCards => {
     // Since player chose incorrectly, the game will need to be reset - i.e. all values of 'clicked' in this.state.cards need to be set to false
     this.setState({
-      // Set this.state.cards to the return array of this.resetGame() to change all values of 'clicked' to false 
+      // Set this.state.cards to the return array of this.resetGame() to change all values of 'clicked' to false
       cards: this.resetGame(updatedCards),
       // Set this.state.score to 0 to 'restart' the game without losing track of the topScore
       score: 0,
@@ -96,11 +112,11 @@ class App extends Component {
 
   // Function to handle resetting the game after a player makes an incorrect choice or wins the game
   resetGame = deck => {
-    // Iterate through all of the card objects passed by handleIncorrectChoice using the .map() method - set all values of 'clicked' to false
+    // Iterate through all of the card objects passed by the handle choice functions using the .map() method - set all values of 'clicked' to false
     // Assign a variable to hold the results, because .map() creates a new array with the results and does not change the original array
     // Use JSX Spread attribute to only update the key of 'clicked' to false https://zhenyong.github.io/react/docs/jsx-spread.html
     const resetDeck = deck.map(card => ({ ...card, clicked: false }));
-    // Shuffle the reset deck and return it to handleIncorrectChoice function which changes state to start the game over
+    // Shuffle the reset deck and return it to the handle choice functions function which changes state to start the game over
     return this.shuffleDeck(resetDeck);
   };
 
@@ -108,7 +124,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <Header 
+        <Header
           title="Concentration Game" // Send the title to the props of Header
           message={this.state.message} // Send this.state.message to the props of Header to display Correct! or Incorrect! messages
           score={this.state.score} // Send this.state.score to the props of Header for display
