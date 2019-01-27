@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Header from "./components/Header";
+import Instructotron from "./components/Instructotron";
 import Wrapper from "./components/Wrapper";
 import ReactCard from "./components/ReactCard";
 import Footer from "./components/Footer";
@@ -113,6 +114,7 @@ class App extends Component {
           score={this.state.score} // Send this.state.score to the props of Header for display
           topScore={this.state.topScore} // Send this.state.topScore to the props of Header for display
         />
+        <Instructotron /> {/* Renders a Jumbotron-style banner with instructions on how to play the game */}
         <Wrapper>
           {
             this.state.cards.map(card => ( // map() this.state.cards to pass each object in the array to the ReactCard component

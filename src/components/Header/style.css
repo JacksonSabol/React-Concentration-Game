@@ -1,6 +1,7 @@
 .header {
   background: #282c32;
   min-height: 70px;
+  box-shadow: 0 0 5px 1px rgb(18, 233, 233);
   position: fixed;
   color: #61dafb;
   font-size: calc(10px + 14 * (100vw - 320px)/ 800);

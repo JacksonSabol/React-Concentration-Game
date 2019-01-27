@@ -1,0 +1,21 @@
+.instructotron {
+    background-color: #4c699c;
+    /* Source for background image: https://wallpapersmug.com/w/download/3840x2400/digital-art-circuit-abstract-63499a */
+    background-image: url("InstructotronBackground.jpg");
+    background-size: cover;
+    background-repeat: repeat;
+    opacity: 0.9;
+    color: #fff;
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+    min-height: 300px;
+    padding: 120px 20px;
+    text-align: center;
+}
+
+.game-title {
+    font-size: calc(30px + 14 * (100vw - 320px)/ 800);
+}
+
+.game-instructions {
+    font-size: calc(10px + 14 * (100vw - 320px)/ 800);
+}
